@@ -116,7 +116,7 @@
                 @forelse ($disciplina as $value)
                     <tr>
                         <td>{{ $value->name ?? 'Nome não disponível' }}</td>
-                        <td>{{ $value->date_creatio }}</td>
+                        <td>{{ $value->date_creation }}</td>
                         <td>
                             <form action="{{ route('disciplina.destroy', $value->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja deletar?');">
                                 @csrf
