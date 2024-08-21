@@ -26,13 +26,13 @@
             font-size: 24px;
             font-weight: bold;
         }
-        .direcao-title {
+        .aluno-title {
             font-size: 20px;
             margin-bottom: 20px;
             display: flex;
             align-items: center;
         }
-        .direcao-title svg {
+        .aluno-title svg {
             margin-left: 10px;
             cursor: pointer;
         }
@@ -89,16 +89,13 @@
         </x-slot>
     <div class="container">
         <div class="header">
-            
-           
             <div>
                 <!-- Coloque aqui o dropdown ou ícone de perfil do usuário -->
             </div>
         </div>
 
-        <div class="direcao-title">
-            <span>Alunos <a href="{{ Route('direcao.create')}}"><i class="material-icons">add</i></a></span>
-            
+        <div class="aluno-title">
+            <span>Aluno <a href="{{ route('aluno.create') }}"><i class="material-icons">add</i></a></span>
         </div>
 
         <div class="search-box">
@@ -117,52 +114,25 @@
                     </tr>
                 </thead>
                 <tbody>
+                @forelse ($aluno as $value)
                     <tr>
-                        <td>Giacomo Guilizzoni</td>
-                        <td>123.456.789-00</td>
-                        <td>12/12/1982</td>
+                        <td>{{ $value->user->name ?? 'Nome não disponível' }}</td>
+                        <td>{{ $value->cpf }}</td>
+                        <td>{{ $value->date_nascimento }}</td>
                         <td>
-                            <a href="#">Alterar</a>
+                            <a href="#">Editar</a>
                             <a href="#">Excluir</a>
                         </td>
                     </tr>
+                @empty
                     <tr>
-                        <td>Marco Botton</td>
-                        <td>123.456.789-00</td>
-                        <td>12/12/1982</td>
-                        <td>
-                            <a href="#">Alterar</a>
-                            <a href="#">Excluir</a>
-                        </td>
+                        <td colspan="4">Nenhum registro encontrado.</td>
                     </tr>
-                    <tr>
-                        <td>Mariah Maclachlan</td>
-                        <td>123.456.789-00</td>
-                        <td>12/12/1982</td>
-                        <td>
-                            <a href="#">Alterar</a>
-                            <a href="#">Excluir</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Valerie Liberty</td>
-                        <td>123.456.789-00</td>
-                        <td>12/12/1982</td>
-                        <td>
-                            <a href="#">Alterar</a>
-                            <a href="#">Excluir</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">Data Grid Docs</a></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                @endforelse
                 </tbody>
             </table>
         </div>
     </div>
-</x-app-layout>
+    </x-app-layout>
 </body>
 </html>

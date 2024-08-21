@@ -84,21 +84,18 @@
     <x-app-layout>
         <x-slot name="header">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                <div class="title"> {{ __('Disciplinas') }} </div>
+                <div class="title"> {{ __('Disciplina') }} </div>
             </h2>
         </x-slot>
     <div class="container">
         <div class="header">
-            
-           
             <div>
                 <!-- Coloque aqui o dropdown ou ícone de perfil do usuário -->
             </div>
         </div>
 
         <div class="direcao-title">
-            <span>Disciplina <a href="{{ Route('direcao.create')}}"><i class="material-icons">add</i></a></span>
-            
+            <span>Disciplina <a href="{{ route('disciplina.create') }}"><i class="material-icons">add</i></a></span>
         </div>
 
         <div class="search-box">
@@ -111,58 +108,32 @@
                 <thead>
                     <tr>
                         <th>Nome</th>
-                        <th>CPF</th>
-                        <th>Data de Nascimento</th>
+                        <th>Data de crição</th>
                         <th>Opções</th>
                     </tr>
                 </thead>
                 <tbody>
+                @forelse ($disciplina as $value)
                     <tr>
-                        <td>Giacomo Guilizzoni</td>
-                        <td>123.456.789-00</td>
-                        <td>12/12/1982</td>
+                        <td>{{ $value->name ?? 'Nome não disponível' }}</td>
+                        <td>{{ $value->date_creatio }}</td>
                         <td>
-                            <a href="#">Alterar</a>
-                            <a href="#">Excluir</a>
+                            <form action="{{ route('disciplina.destroy', $value->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja deletar?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Excluir</button>
+                            </form>                            
                         </td>
                     </tr>
+                @empty
                     <tr>
-                        <td>Marco Botton</td>
-                        <td>123.456.789-00</td>
-                        <td>12/12/1982</td>
-                        <td>
-                            <a href="#">Alterar</a>
-                            <a href="#">Excluir</a>
-                        </td>
+                        <td colspan="4">Nenhum registro encontrado.</td>
                     </tr>
-                    <tr>
-                        <td>Mariah Maclachlan</td>
-                        <td>123.456.789-00</td>
-                        <td>12/12/1982</td>
-                        <td>
-                            <a href="#">Alterar</a>
-                            <a href="#">Excluir</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Valerie Liberty</td>
-                        <td>123.456.789-00</td>
-                        <td>12/12/1982</td>
-                        <td>
-                            <a href="#">Alterar</a>
-                            <a href="#">Excluir</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">Data Grid Docs</a></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                @endforelse
                 </tbody>
             </table>
         </div>
     </div>
-</x-app-layout>
+    </x-app-layout>
 </body>
 </html>

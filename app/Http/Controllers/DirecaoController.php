@@ -22,7 +22,7 @@ class DirecaoController extends Controller
 
     public function create()
     {
-        return view('direcao.index');
+        return view('direcao.create');
     }
 
     

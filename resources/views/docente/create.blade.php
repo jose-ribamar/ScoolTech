@@ -1,35 +1,53 @@
-@php
+<x-guest-layout>
+    <x-authentication-card>
+        <x-slot name="logo">
+            <x-authentication-card-logo />
+        </x-slot>
 
-namespace App\Http\Controllers;
+        <x-validation-errors class="mb-4" />
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Direcao;
+        <form method="POST" action="{{ route('docente.store') }}">
+            @csrf
 
-class PerfilController extends Controller
-{
-    public function edit()
-    {
-        $user = Auth::user();
-        $direcao = $user->direcao; // Supondo que você tenha uma relação definida
-        return view('perfil.edit', compact('user', 'direcao'));
-    }
+            <div>
+                <x-label for="name" value="{{ __('Nome') }}" />
+                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+            </div>
 
-    public function update(Request $request)
-    {
-        $request->validate([
-            'cpf' => 'required|string|max:255',
-            'date_nascimento' => 'required|date',
-        ]);
+            <div class="mt-4">
+                <x-label for="cpf" value="{{ __('CPF') }}" />
+                <x-input id="cpf" class="block mt-1 w-full" type="text" name="cpf" :value="old('cpf')" required autofocus autocomplete="cpf" />
+            </div>
 
-        $user = Auth::user();
-        $direcao = $user->direcao;
-        
-        $direcao->update([
-            'cpf' => $request->input('cpf'),
-            'date_nascimento' => $request->input('date_nascimento'),
-        ]);
+            <div class="mt-4">
+                <x-label for="email" value="{{ __('Email') }}" />
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+            </div>
 
-        return redirect()->route('perfil.edit')->with('success', 'Perfil atualizado com sucesso.');
-    }
-}
+            <div class="mt-4">
+                <x-label for="date_nascimento" value="{{ __('Data de Nascimento') }}" />
+                <x-input id="date_nascimento" class="block mt-1 w-full" type="date" name="date_nascimento" :value="old('date_nascimento')" required autofocus autocomplete="date_nascimento" />
+            </div>
+
+            <div class="mt-4">
+                <x-label for="password" value="{{ __('Senha') }}" />
+                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
+            </div>
+
+            <div class="mt-4">
+                <x-label for="password_confirmation" value="{{ __('Confirme a Senha') }}" />
+                <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
+            </div>
+
+            <div class="flex items-center justify-end mt-4">
+                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
+                    {{ __('Já registrado?') }}
+                </a>
+
+                <x-button class="ms-4">
+                    {{ __('Registrar') }}
+                </x-button>
+            </div>
+        </form>
+    </x-authentication-card>
+</x-guest-layout>

@@ -33,10 +33,17 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/docente', [DocenteController::class, 'index'])->name('docente.index');
     Route::get('/docente/create', [DocenteController::class, 'create'])->name('docente.create');
+    Route::post('/docente', [DocenteController::class, 'store'])->name('docente.store');
 
     Route::get('/aluno', [AlunoController::class, 'index'])->name('aluno.index');
     Route::get('/aluno/create', [AlunoController::class, 'create'])->name('aluno.create');
+    Route::post('/aluno', [AlunoController::class, 'store'])->name('aluno.store');
 
     Route::get('/disciplina', [DisciplinaController::class, 'index'])->name('disciplina.index');
     Route::get('/disciplina/create', [DisciplinaController::class, 'create'])->name('disciplina.create');
+    Route::post('/clients/store', [DisciplinaController::class, 'store'])->name('disciplina.store');
+    Route::get('/disciplina/{client}/edit', [DisciplinaController::class, 'edit'])->name('disciplina.edit');
+    Route::put('/disciplina/{client}', [DisciplinaController::class, 'update'])->name('disciplina.update');
+    Route::delete('/disciplina/{client}', [DisciplinaController::class, 'destroy'])->name('disciplina.destroy');
+
 });

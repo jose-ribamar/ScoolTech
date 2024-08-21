@@ -12,23 +12,43 @@ class AlunoController extends Controller
      */
     public function index()
     {
-        return view('aluno.index');
+        // Carregar os dados da direção e a relação com o usuário
+        $aluno = Aluno::with('user')->paginate(15);
+    
+        return view('aluno.index', compact('aluno'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    
+    
+    
+        public function create()
+        {
+            return view('aluno.create');
+        }
+    
+        
+        public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'cpf' => 'required|string|max:14|unique:aluno',
+            'date_nascimento' => 'required|date',
+        ]);
+    
+        $user = \App\Models\User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => \Illuminate\Support\Facades\Hash::make($request->password),
+        ]);
+    
+        Aluno::create([
+            'cpf' => $request->cpf,
+            'date_nascimento' => $request->date_nascimento,
+            'user_id' => $user->id,
+        ]);
+    
+        return redirect()->route('aluno.index')->with('success', 'Usuário e dados de aluno criados com sucesso.');
     }
 
     /**
