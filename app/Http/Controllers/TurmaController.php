@@ -12,7 +12,8 @@ class TurmaController extends Controller
      */
     public function index()
     {
-        return view('direcao.index');
+        $turma = Turma::paginate(15);
+        return view('turma.index', compact('turma'));
     }
 
     /**
@@ -20,16 +21,32 @@ class TurmaController extends Controller
      */
     public function create()
     {
-        //
+        return view('turma.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
+    // store method
     public function store(Request $request)
-    {
-        //
-    }
+{
+    // Validação dos dados do formulário
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'ano' => 'required|string|max:10',
+        'date_creation' => 'required|date',
+    ]);
+
+    // Criação de um novo registro
+    Turma::create([
+        'name' => $request->input('name'),
+        'ano' => $request->input('ano'),
+        'date_creation' => $request->input('date_creation'),
+    ]);
+
+    
+    return redirect()->route('turma.index')->with('success', 'Turma criada com sucesso!');
+}
 
     /**
      * Display the specified resource.

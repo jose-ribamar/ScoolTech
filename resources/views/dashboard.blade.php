@@ -68,7 +68,7 @@
                     <div class="button"><a href="{{ route('disciplina.index') }}"> Disciplina </a> </div>
                 </div>
                 <div style="margin-top: 20px;">
-                    <div class="button"><a href="{{ route('disciplina.index') }}"> Turma </a></div>
+                    <div class="button"><a href="{{ route('turma.index') }}"> Turma </a></div>
                 </div>
             </div>
         </div>

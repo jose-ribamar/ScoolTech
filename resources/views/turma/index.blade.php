@@ -26,13 +26,13 @@
             font-size: 24px;
             font-weight: bold;
         }
-        .direcao-title {
+        .turma-title {
             font-size: 20px;
             margin-bottom: 20px;
             display: flex;
             align-items: center;
         }
-        .direcao-title svg {
+        .turma-title svg {
             margin-left: 10px;
             cursor: pointer;
         }
@@ -84,21 +84,18 @@
     <x-app-layout>
         <x-slot name="header">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                <div class="title"> {{ __('Turmas') }} </div>
+                <div class="title"> {{ __('Turma') }} </div>
             </h2>
         </x-slot>
     <div class="container">
         <div class="header">
-            
-           
             <div>
-                <!-- Coloque aqui o dropdown ou ícone de perfil do usuário -->
+               
             </div>
         </div>
 
-        <div class="direcao-title">
-            <span>Turmas <a href="{{ Route('direcao.create')}}"><i class="material-icons">add</i></a></span>
-            
+        <div class="turma-title">
+            <span>Turma <a href="{{ route('turma.create') }}"><i class="material-icons">add</i></a></span>
         </div>
 
         <div class="search-box">
@@ -111,58 +108,34 @@
                 <thead>
                     <tr>
                         <th>Nome</th>
-                        <th>CPF</th>
-                        <th>Data de Nascimento</th>
+                        <th>Ano escolar</th>
+                        <th>Data de crição</th>
                         <th>Opções</th>
                     </tr>
                 </thead>
                 <tbody>
+                @forelse ($turma as $value)
                     <tr>
-                        <td>Giacomo Guilizzoni</td>
-                        <td>123.456.789-00</td>
-                        <td>12/12/1982</td>
+                        <td>{{ $value->name ?? 'Nome não disponível' }}</td>
+                        <td>{{ $value->ano ?? 'Ano não disponível' }}° ANO</td>
+                        <td>{{ $value->date_creation }}</td>
                         <td>
-                            <a href="#">Alterar</a>
-                            <a href="#">Excluir</a>
+                            {{-- <form action="{{ route('turma.destroy', $value->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja deletar?');">
+                                @csrf
+                                @method('DELETE') --}}
+                                <button type="submit" class="btn btn-danger">Excluir</button>
+                            {{-- </form>                             --}}
                         </td>
                     </tr>
+                @empty
                     <tr>
-                        <td>Marco Botton</td>
-                        <td>123.456.789-00</td>
-                        <td>12/12/1982</td>
-                        <td>
-                            <a href="#">Alterar</a>
-                            <a href="#">Excluir</a>
-                        </td>
+                        <td colspan="4">Nenhum registro encontrado.</td>
                     </tr>
-                    <tr>
-                        <td>Mariah Maclachlan</td>
-                        <td>123.456.789-00</td>
-                        <td>12/12/1982</td>
-                        <td>
-                            <a href="#">Alterar</a>
-                            <a href="#">Excluir</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Valerie Liberty</td>
-                        <td>123.456.789-00</td>
-                        <td>12/12/1982</td>
-                        <td>
-                            <a href="#">Alterar</a>
-                            <a href="#">Excluir</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">Data Grid Docs</a></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                @endforelse
                 </tbody>
             </table>
         </div>
     </div>
-</x-app-layout>
+    </x-app-layout>
 </body>
 </html>
