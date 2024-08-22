@@ -5,6 +5,7 @@ use App\Http\Controllers\DirecaoController;
 use App\Http\Controllers\DisciplinaController;
 use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TurmaController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,9 +42,16 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/disciplina', [DisciplinaController::class, 'index'])->name('disciplina.index');
     Route::get('/disciplina/create', [DisciplinaController::class, 'create'])->name('disciplina.create');
-    Route::post('/clients/store', [DisciplinaController::class, 'store'])->name('disciplina.store');
+    Route::post('/disciplina/store', [DisciplinaController::class, 'store'])->name('disciplina.store');
     Route::get('/disciplina/{client}/edit', [DisciplinaController::class, 'edit'])->name('disciplina.edit');
     Route::put('/disciplina/{client}', [DisciplinaController::class, 'update'])->name('disciplina.update');
     Route::delete('/disciplina/{client}', [DisciplinaController::class, 'destroy'])->name('disciplina.destroy');
+
+    Route::get('/turma', [TurmaController::class, 'index'])->name('turma.index');
+    Route::get('/turma/create', [TurmaController::class, 'create'])->name('turma.create');
+    Route::post('/turma/store', [TurmaController::class, 'store'])->name('turma.store');
+    // Route::get('/turma/{client}/edit', [TurmaController::class, 'edit'])->name('turma.edit');
+    // Route::put('/turma/{client}', [TurmaController::class, 'update'])->name('turma.update');
+    // Route::delete('/turma/{client}', [TurmaController::class, 'destroy'])->name('turma.destroy');
 
 });
