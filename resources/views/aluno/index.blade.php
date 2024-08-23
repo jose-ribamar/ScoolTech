@@ -95,7 +95,7 @@
         </div>
 
         <div class="aluno-title">
-            <span>Aluno <a href="{{ route('aluno.create') }}"><i class="material-icons">add</i></a></span>
+            <span>Aluno <a href="{{ route('aluno.create') }}"><i class="material-icons">person_add</i></a></span>
         </div>
 
         <div class="search-box">

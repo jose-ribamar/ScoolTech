@@ -10,26 +10,27 @@
             @csrf
 
             <div>
-                <x-label for="turma" value="{{ __('Turma') }}" />
+                <x-label for="turma" value="{{ __('Nome da Turma') }}" />
                 <x-input id="turma" class="block mt-1 w-full" type="text" name="turma" value="{{ $turma->name }}" readonly />
                 <input type="hidden" name="turma_id" value="{{ $turma->id }}">
             </div>
 
             <div class="mt-4">
-                <x-label for="docente_id" value="{{ __('Docente') }}" />
-                <select id="docente_id" class="block mt-1 w-full" name="docente_id" required>
+                <x-label for="docente_id" value="{{ __('Nome do Docente') }}" />
+                <select id="docente_id" name="docente_id" class="block mt-1 w-full" required>
                     @foreach($docentes as $docente)
-                        <option value="{{ $docente->id }}">{{ $docente->name }}</option>
+                        <option value="{{ $docente->id }}">{{ $docente->nome }}</option>
                     @endforeach
                 </select>
             </div>
 
             <div class="mt-4">
-                <x-label for="disciplina_id" value="{{ __('Disciplina') }}" />
-                <select id="disciplina_id" class="block mt-1 w-full" name="disciplina_id" required>
+                <x-label for="disciplina_id" value="{{ __('Nome da Disciplina') }}" />
+                <select id="disciplina_id" name="disciplina_id" class="block mt-1 w-full" required>
                     @foreach($disciplinas as $disciplina)
-                        <option value="{{ $disciplina->id }}">{{ $disciplina->name }}</option>
+                        <option value="{{ $disciplina->id }}">{{ $disciplina->nome }}</option>
                     @endforeach
+                    
                 </select>
             </div>
 

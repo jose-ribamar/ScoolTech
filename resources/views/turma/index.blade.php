@@ -73,10 +73,37 @@
         th {
             background-color: #f2f2f2;
         }
-        td a {
-            margin-right: 10px;
-            text-decoration: none;
-            color: blue;
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            position: relative; /* Necessário para o posicionamento do texto */
+        }
+        .btn-group a, .btn-group button {
+            flex-grow: 1;
+            margin: 0 2px;
+            padding: 5px;
+            font-size: 12px;
+            position: relative;
+        }
+        .btn-group button {
+            border: none;
+        }
+        .hover-text {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #000;
+            color: #fff;
+            padding: 5px;
+            border-radius: 3px;
+            display: none;
+            z-index: 10;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        .btn-group a:hover .hover-text, .btn-group button:hover .hover-text {
+            display: block;
         }
     </style>
 </head>
@@ -109,7 +136,7 @@
                     <tr>
                         <th>Nome</th>
                         <th>Ano escolar</th>
-                        <th>Data de crição</th>
+                        <th>Data de criação</th>
                         <th>Opções</th>
                     </tr>
                 </thead>
@@ -120,11 +147,27 @@
                         <td>{{ $value->ano ?? 'Ano não disponível' }}° ANO</td>
                         <td>{{ $value->date_creation }}</td>
                         <td>
-                            {{-- <form action="{{ route('turma.destroy', $value->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja deletar?');">
-                                @csrf
-                                @method('DELETE') --}}
-                                <button type="submit" class="btn btn-danger">Excluir</button>
-                            {{-- </form>                             --}}
+                            <div class="btn-group">
+                                <a href="{{ route('lotacao.create', ['turma_id' => $value->id]) }}" class="btn btn-info">
+                                    <i class="material-icons">assignment_ind</i>
+                                    <span class="hover-text">Lotação</span>
+                                </a>
+                                
+                                
+                                <a href="" class="btn btn-warning"><i class="material-icons">local_library</i>
+                                    <span class="hover-text">Matrícula</span>
+                                </a>
+                                <a href="" class="btn btn-primary"><i class="material-icons">create</i>
+                                    <span class="hover-text">Editar</span>
+                                </a>
+                                <form action="" method="POST" onsubmit="return confirm('Tem certeza que deseja deletar?');" style="flex-grow: 1;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger"><i class="material-icons">close</i>
+                                        <span class="hover-text">Excluir</span>
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 @empty

@@ -95,7 +95,7 @@
         </div>
 
         <div class="direcao-title">
-            <span>Direção <a href="{{ route('direcao.create') }}"><i class="material-icons">add</i></a></span>
+            <span>Direção <a href="{{ route('direcao.create') }}"><i class="material-icons">group_add</i></a></span>
         </div>
 
         <div class="search-box">
