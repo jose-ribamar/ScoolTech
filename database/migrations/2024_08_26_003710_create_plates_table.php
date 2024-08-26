@@ -7,27 +7,26 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Executa as migrações.
+     * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('lotacoes', function (Blueprint $table) {
+        Schema::create('plates', function (Blueprint $table) {
             $table->id();
+            $table->date('date_creation')->nullable(false);
             $table->unsignedBigInteger('turma_id')->nullable();
             $table->foreign('turma_id')->references('id')->on('turmas');
-            $table->unsignedBigInteger('docente_id')->nullable();
-            $table->foreign('docente_id')->references('id')->on('docentes');
-            $table->unsignedBigInteger('disciplina_id')->nullable();
-            $table->foreign('disciplina_id')->references('id')->on('disciplinas');
+            $table->unsignedBigInteger('aluno_id')->nullable();
+            $table->foreign('aluno_id')->references('id')->on('alunos');
             $table->timestamps();
         });
     }
 
     /**
-     * Reverte as migrações.
+     * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('lotacoes');
+        Schema::dropIfExists('plates');
     }
 };

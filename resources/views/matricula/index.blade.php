@@ -96,7 +96,7 @@
 
         <div class="direcao-title">
             <span>Lotação 
-                <a href="{{ route('lotacao.create', ['turma_id' => request('turma_id')]) }}">
+                <a href="{{ route('matricula.create', ['turma_id' => request('turma_id')]) }}">
                     <i class="material-icons">add</i>
                 </a>
             </span>
@@ -104,7 +104,7 @@
         
 
         <!-- Filtro de Turma -->
-        <form method="GET" action="{{ route('lotacao.index') }}" class="search-box">
+        <form method="GET" action="{{ route('matricula.index') }}" class="search-box">
             <select name="turma_id">
                 <option value="">Selecione a turma</option>
                 @foreach ($turmas as $turma)
@@ -120,18 +120,16 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Turma</th>
-                        <th>Docente</th>
-                        <th>Disciplina</th>
+                        <th>aluno</th>
+                        <th>Data de matrícula</th>
                         <th>Opções</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($lotacao as $item)
+                    @forelse ($matricula as $item)
                     <tr>
-                        <td>{{ $item->turma->name ?? 'Nome não disponível' }}</td>
-                        <td>{{ $item->docente->user->name ?? 'Nome não disponível' }}</td> <!-- Accessing docente related to the item -->
-                        <td>{{ $item->disciplina->name ?? 'Nome não disponível' }}</td>
+                        <td>{{ $item->aluno->user->name ?? 'Nome não disponível' }}</td> <!-- Accessing docente related to the item -->
+                        <td>{{ $item->date_creation ?? 'Nome não disponível' }}</td>
                         <td>
                             <a href="#">Editar</a>
                             <a href="#">Excluir</a>

@@ -148,13 +148,13 @@
                         <td>{{ $value->date_creation }}</td>
                         <td>
                             <div class="btn-group">
-                                <a href="{{ route('lotacao.create', ['turma_id' => $value->id]) }}" class="btn btn-info">
+                                <a href="{{ route('lotacao.index', ['turma_id' => $value->id]) }}" class="btn btn-info">
                                     <i class="material-icons">assignment_ind</i>
                                     <span class="hover-text">Lotação</span>
                                 </a>
                                 
                                 
-                                <a href="" class="btn btn-warning"><i class="material-icons">local_library</i>
+                                <a href="{{ route('matricula.index', ['turma_id' => $value->id]) }}" class="btn btn-warning"><i class="material-icons">local_library</i>
                                     <span class="hover-text">Matrícula</span>
                                 </a>
                                 <a href="" class="btn btn-primary"><i class="material-icons">create</i>

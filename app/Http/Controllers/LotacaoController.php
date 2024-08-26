@@ -11,76 +11,91 @@ use Illuminate\Http\Request;
 class LotacaoController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Exibe uma listagem do recurso.
      */
-    public function index()
-    {
-        // Carregar os dados da lotação com as relações necessárias
-        $lotacao = Lotacao::with(['turma', 'docente', 'disciplina'])->paginate(15);
+    public function index(Request $request)
+{
     
-        return view('lotacao.index', compact('lotacao'));
+    $turmaId = $request->input('turma_id');
+
+    $lotacaoQuery = Lotacao::with(['turma', 'docente', 'disciplina']);
+
+    if ($turmaId) {
+        $lotacaoQuery->where('turma_id', $turmaId);
     }
 
-    public function create($turma_id)
-{
-    $docentes = Docente::all();
-    $disciplinas = Disciplina::all();
-    $turma = Turma::findOrFail($turma_id);
-
+    $lotacao = $lotacaoQuery->paginate(15);
     
+ 
+    $turmas = Turma::all();
+    $docentes = Docente::all();
 
-    return view('lotacao.create', compact('docentes', 'disciplinas', 'turma'));
+
+    return view('lotacao.index', compact('lotacao', 'turmas', 'docentes'));
 }
 
 
-
-public function store(Request $request)
+public function create($turmaId)
 {
-    $request->validate([
-        'turma_id' => 'required|integer|exists:turmas,id',
-        'docente_id' => 'required|integer|exists:docentes,id',
-        'disciplina_id' => 'required|integer|exists:disciplinas,id',
-    ]);
+    $turma = Turma::findOrFail($turmaId);
+    $docentes = Docente::all();
 
-    Lotacao::create([
-        'turma_id' => $request->turma_id,
-        'docente_id' => $request->docente_id,
-        'disciplina_id' => $request->disciplina_id,
-    ]);
+    $disciplinasSelecionadas = Lotacao::where('turma_id', $turma->id)->pluck('disciplina_id')->toArray();
 
-    return redirect()->route('lotacao.index')->with('success', 'Lotação criada com sucesso.');
+    $disciplinas = Disciplina::whereNotIn('id', $disciplinasSelecionadas)->get();
+
+    return view('lotacao.create', compact('turma', 'docentes', 'disciplinas'));
 }
 
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'turma_id' => 'required|integer|exists:turmas,id',
+            'docente_id' => 'required|integer|exists:docentes,id',
+            'disciplina_id' => 'required|integer|exists:disciplinas,id',
+        ]);
+
+        
+
+        Lotacao::create([
+            'turma_id' => $request->turma_id,
+            'docente_id' => $request->docente_id,
+            'disciplina_id' => $request->disciplina_id,
+        ]);
+
+        return redirect()->route('turma.index')->with('success', 'Lotação criada com sucesso.');
+    }
 
     /**
-     * Display the specified resource.
+     * Exibe o recurso especificado.
      */
     public function show(Lotacao $lotacao)
     {
-        //
+        // Implementar conforme necessidade
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Mostra o formulário para edição do recurso especificado.
      */
     public function edit(Lotacao $lotacao)
     {
-        //
+        // Implementar conforme necessidade
     }
 
     /**
-     * Update the specified resource in storage.
+     * Atualiza o recurso especificado no armazenamento.
      */
     public function update(Request $request, Lotacao $lotacao)
     {
-        //
+        // Implementar conforme necessidade
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove o recurso especificado do armazenamento.
      */
     public function destroy(Lotacao $lotacao)
     {
-        //
+        // Implementar conforme necessidade
     }
 }

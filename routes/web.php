@@ -5,6 +5,7 @@ use App\Http\Controllers\DirecaoController;
 use App\Http\Controllers\DisciplinaController;
 use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\LotacaoController;
+use App\Http\Controllers\MatriculaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TurmaController;
 use App\Http\Controllers\UserController;
@@ -36,10 +37,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/docente', [DocenteController::class, 'index'])->name('docente.index');
     Route::get('/docente/create', [DocenteController::class, 'create'])->name('docente.create');
     Route::post('/docente', [DocenteController::class, 'store'])->name('docente.store');
+   
+
+   
 
     Route::get('/lotacao', [LotacaoController::class, 'index'])->name('lotacao.index');
     Route::get('/lotacao/create/{turma_id}', [LotacaoController::class, 'create'])->name('lotacao.create');
     Route::post('/lotacao', [LotacaoController::class, 'store'])->name('lotacao.store');
+
+    Route::get('/matricula', [MatriculaController::class, 'index'])->name('matricula.index');
+    Route::get('/matricula/search', [MatriculaController::class, 'search'])->name('matricula.search');
+    Route::get('/matricula/create/{turma_id}', [matriculaController::class, 'create'])->name('matricula.create');
+    Route::post('/matricula', [matriculaController::class, 'store'])->name('matricula.store');
+
+    
 
     Route::get('/aluno', [AlunoController::class, 'index'])->name('aluno.index');
     Route::get('/aluno/create', [AlunoController::class, 'create'])->name('aluno.create');

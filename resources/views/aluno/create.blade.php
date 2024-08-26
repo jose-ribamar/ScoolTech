@@ -6,36 +6,53 @@
 
         <x-validation-errors class="mb-4" />
 
-        <form method="POST" action="{{ route('lotacao.store') }}">
+        <x-validation-errors class="mb-4" />
+
+        <form method="POST" action="{{ route('aluno.store') }}">
             @csrf
 
             <div>
-                <x-label for="turma" value="{{ __('Turma') }}" />
-                <x-input id="turma" class="block mt-1 w-full" type="text" name="turma" value="{{ $turma->name }}" readonly />
-                <input type="hidden" name="turma_id" value="{{ $turma->id }}">
+                <x-label for="name" value="{{ __('Nome') }}" />
+                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+
             </div>
 
             <div class="mt-4">
-                <x-label for="docente_id" value="{{ __('Docente') }}" />
-                <select id="docente_id" class="block mt-1 w-full" name="docente_id" required>
-                    @foreach($docentes as $docente)
-                        <option value="{{ $docente->id }}">{{ $docente->name }}</option>
-                    @endforeach
-                </select>
+                <x-label for="cpf" value="{{ __('CPF') }}" />
+                <x-input id="cpf" class="block mt-1 w-full" type="text" name="cpf" :value="old('cpf')" required autofocus autocomplete="cpf" />
+
+
+
+
             </div>
 
             <div class="mt-4">
-                <x-label for="disciplina_id" value="{{ __('Disciplina') }}" />
-                <select id="disciplina_id" class="block mt-1 w-full" name="disciplina_id" required>
-                    @foreach($disciplinas as $disciplina)
-                        <option value="{{ $disciplina->id }}">{{ $disciplina->name }}</option>
-                    @endforeach
-                </select>
+                <x-label for="email" value="{{ __('Email') }}" />
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+            </div>
+
+            <div class="mt-4">
+                <x-label for="date_nascimento" value="{{ __('Data de Nascimento') }}" />
+                <x-input id="date_nascimento" class="block mt-1 w-full" type="date" name="date_nascimento" :value="old('date_nascimento')" required autofocus autocomplete="date_nascimento" />
+            </div>
+
+            <div class="mt-4">
+                <x-label for="password" value="{{ __('Senha') }}" />
+                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
+            </div>
+
+            <div class="mt-4">
+                <x-label for="password_confirmation" value="{{ __('Confirme a Senha') }}" />
+                <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <x-button class="ml-4">
-                    {{ __('Salvar') }}
+                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
+                    {{ __('Já registrado?') }}
+                </a>
+
+                <x-button class="ms-4">
+                    {{ __('Registrar') }}
                 </x-button>
             </div>
         </form>

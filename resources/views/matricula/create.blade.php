@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Direção Workstation - Criar Lotação</title>
+    <title>Direção Workstation - Criar Matrícula</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
@@ -13,7 +13,7 @@
                 <x-authentication-card-logo />
             </x-slot>
             <x-validation-errors class="mb-4" />
-            <form method="POST" action="{{ route('lotacao.store') }}">
+            <form method="POST" action="{{ route('matricula.store') }}">
                 @csrf
                 <div>
                     <x-label for="turma" value="{{ __('Nome da Turma') }}" />
@@ -21,20 +21,16 @@
                     <input type="hidden" name="turma_id" value="{{ $turma->id }}">
                 </div>
                 <div class="mt-4">
-                    <x-label for="docente_id" value="{{ __('Nome do Docente') }}" />
-                    <select id="docente_id" name="docente_id" class="block mt-1 w-full" required>
-                        @foreach($docentes as $docente)
-                            <option value="{{ $docente->id }}">{{ $docente->user->name ?? 'Docentes não cadastrados' }}</option>
+                    <x-label for="aluno_id" value="{{ __('Nome do Aluno') }}" />
+                    <select id="aluno_id" name="aluno_id" class="block mt-1 w-full" required>
+                        @foreach($alunos as $aluno)
+                            <option value="{{ $aluno->id }}">{{ $aluno->user->name ?? 'Nome não disponível' }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="mt-4">
-                    <x-label for="disciplina_id" value="{{ __('Nome da Disciplina') }}" />
-                    <select id="disciplina_id" name="disciplina_id" class="block mt-1 w-full" required>
-                        @foreach($disciplinas as $disciplina)
-                            <option value="{{ $disciplina->id }}">{{ $disciplina->name ?? 'Nome não disponível' }}</option>
-                        @endforeach
-                    </select>
+                    <x-label for="date_creation" value="{{ __('Data de Matrícula') }}" />
+                    <x-input id="date_creation" class="block mt-1 w-full" type="date" name="date_creation" required />
                 </div>
                 <div class="flex items-center justify-end mt-4">
                     <x-button class="ml-4">

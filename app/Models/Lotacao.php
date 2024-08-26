@@ -9,7 +9,7 @@ class Lotacao extends Model
 {
     use HasFactory;
 
-    protected $table = 'lotacoes'; 
+    protected $table = 'lotacoes';
 
     protected $fillable = [
         'turma_id',
@@ -31,4 +31,5 @@ class Lotacao extends Model
     {
         return $this->belongsTo(Disciplina::class);
     }
+    
 }
