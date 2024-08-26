@@ -21,4 +21,9 @@ class Aluno extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function matriculas()
+    {
+        return $this->hasMany(Matricula::class, 'aluno_id');
+    }
 }
