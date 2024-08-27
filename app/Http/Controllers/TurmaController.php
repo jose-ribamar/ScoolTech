@@ -59,22 +59,19 @@ class TurmaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Turma $turma)
-    {
-        //
-    }
+    public function edit($id)
+{
+    $turma = Turma::findOrFail($id);
+    return view('turma.edit', compact('turma'));
+}
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Turma $turma)
-    {
-        //
-    }
+public function update(Request $request, $id)
+{
+    $turma = Turma::findOrFail($id);
+    $turma->update($request->all());
+    return redirect()->route('turma.index')->with('success', 'Turma updated successfully');
+}
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Turma $turma)
     {
         //

@@ -120,7 +120,7 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Turma</th>
+                      
                         <th>Docente</th>
                         <th>Disciplina</th>
                         <th>Opções</th>
@@ -129,7 +129,7 @@
                 <tbody>
                     @forelse ($lotacao as $item)
                     <tr>
-                        <td>{{ $item->turma->name ?? 'Nome não disponível' }}</td>
+                       
                         <td>{{ $item->docente->user->name ?? 'Nome não disponível' }}</td> <!-- Accessing docente related to the item -->
                         <td>{{ $item->disciplina->name ?? 'Nome não disponível' }}</td>
                         <td>
