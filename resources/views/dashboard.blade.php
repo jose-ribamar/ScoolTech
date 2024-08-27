@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Direção Workstation</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -62,13 +64,14 @@
 
             <div class="py-12">
                 <div class="button-group">
-                    <div class="button"> <a href="{{ route('direcao.index') }}"> Direção </a> </div>
-                    <div class="button"> <a href="{{ route('docente.index') }}"> Docente </a></div>
-                    <div class="button"><a href="{{ route('aluno.index') }}"> Aluno (a)</a>  </div>
-                    <div class="button"><a href="{{ route('disciplina.index') }}"> Disciplina </a> </div>
+                    <div class="button"> <a href="{{ route('direcao.index') }}">  <i class="material-icons">account_balance
+                    </i> </a> </div>
+                    <div class="button"> <a href="{{ route('docente.index') }}"> <i class="material-icons">person</i></a> </a></div>
+                    <div class="button"><a href="{{ route('aluno.index') }}">  <i class="material-icons">face</i></a>  </div>
+                    <div class="button"><a href="{{ route('disciplina.index') }}"> <i class="material-icons">import_contacts</i> </a> </div>
                 </div>
                 <div style="margin-top: 20px;">
-                    <div class="button"><a href="{{ route('turma.index') }}"> Turma </a></div>
+                    <div class="button"><a href="{{ route('turma.index') }}"> <i class="material-icons">school</i>  </a></div>
                 </div>
             </div>
         </div>
