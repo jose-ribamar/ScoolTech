@@ -42,8 +42,12 @@ Route::middleware('auth')->group(function () {
    
 
     Route::get('/lotacao', [LotacaoController::class, 'index'])->name('lotacao.index');
-    Route::get('/lotacao/create/{turma_id}', [LotacaoController::class, 'create'])->name('lotacao.create');
+    Route::get('/lotacao/create/{id}', [LotacaoController::class, 'create'])->name('lotacao.create');
     Route::post('/lotacao', [LotacaoController::class, 'store'])->name('lotacao.store');
+    Route::get('/lotacao/{id}/edit', [LotacaoController::class, 'edit'])->name('lotacao.edit');
+
+    Route::put('/lotacao/{client}', [LotacaoController::class, 'update'])->name('lotacao.update');
+    
 
     Route::get('/matricula', [MatriculaController::class, 'index'])->name('matricula.index');
     Route::get('/matricula/search', [MatriculaController::class, 'search'])->name('matricula.search');

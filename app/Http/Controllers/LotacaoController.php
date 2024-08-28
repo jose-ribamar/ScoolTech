@@ -14,39 +14,36 @@ class LotacaoController extends Controller
      * Exibe uma listagem do recurso.
      */
     public function index(Request $request)
-{
-    
-    $turmaId = $request->input('turma_id');
+    {
+        $turmaId = $request->input('turma_id');
 
-    $lotacaoQuery = Lotacao::with(['turma', 'docente', 'disciplina']);
+        $lotacaoQuery = Lotacao::with(['turma', 'docente', 'disciplina']);
 
-    if ($turmaId) {
-        $lotacaoQuery->where('turma_id', $turmaId);
+        if ($turmaId) {
+            $lotacaoQuery->where('turma_id', $turmaId);
+        }
+
+        $lotacao = $lotacaoQuery->paginate(15);
+
+        $turmas = Turma::all();
+        $docentes = Docente::all();
+
+        return view('lotacao.index', compact('lotacao', 'turmas', 'docentes'));
     }
 
-    $lotacao = $lotacaoQuery->paginate(15);
-    
- 
-    $turmas = Turma::all();
-    $docentes = Docente::all();
+    public function create($turmaId)
+    {
+        $turma = Turma::findOrFail($turmaId);
+        $docentes = Docente::all();
 
+        // Obter disciplinas já selecionadas para a turma
+        $disciplinasSelecionadas = Lotacao::where('id', $turma->id)->pluck('disciplina_id')->toArray();
 
-    return view('lotacao.index', compact('lotacao', 'turmas', 'docentes'));
-}
+        // Obter disciplinas que não foram selecionadas
+        $disciplinas = Disciplina::whereNotIn('id', $disciplinasSelecionadas)->get();
 
-
-public function create($turmaId)
-{
-    $turma = Turma::findOrFail($turmaId);
-    $docentes = Docente::all();
-
-    $disciplinasSelecionadas = Lotacao::where('turma_id', $turma->id)->pluck('disciplina_id')->toArray();
-
-    $disciplinas = Disciplina::whereNotIn('id', $disciplinasSelecionadas)->get();
-
-    return view('lotacao.create', compact('turma', 'docentes', 'disciplinas'));
-}
-
+        return view('lotacao.create', compact('turma', 'docentes', 'disciplinas'));
+    }
 
     public function store(Request $request)
     {
@@ -56,15 +53,13 @@ public function create($turmaId)
             'disciplina_id' => 'required|integer|exists:disciplinas,id',
         ]);
 
-        
-
         Lotacao::create([
             'turma_id' => $request->turma_id,
             'docente_id' => $request->docente_id,
             'disciplina_id' => $request->disciplina_id,
         ]);
 
-        return redirect()->route('turma.index')->with('success', 'Lotação criada com sucesso.');
+        return redirect()->route('lotacao.index')->with('success', 'Lotação criada com sucesso.');
     }
 
     /**
@@ -78,18 +73,42 @@ public function create($turmaId)
     /**
      * Mostra o formulário para edição do recurso especificado.
      */
-    public function edit(Lotacao $lotacao)
-    {
-        // Implementar conforme necessidade
-    }
+    public function edit($id)
+{
+    $lotacao = Lotacao::findOrFail($id);
+    $docentes = Docente::all();
 
-    /**
-     * Atualiza o recurso especificado no armazenamento.
-     */
-    public function update(Request $request, Lotacao $lotacao)
-    {
-        // Implementar conforme necessidade
-    }
+    // Obter a lista de disciplinas disponíveis para seleção
+    $disciplinas = Disciplina::all();
+
+    // Adicionar lógica para excluir disciplinas já alocadas, exceto a disciplina atual
+    $disciplinasDisponiveis = $disciplinas->filter(function ($disciplina) use ($lotacao) {
+        return $disciplina->id === $lotacao->disciplina_id || !Lotacao::where('disciplina_id', $disciplina->id)->exists();
+    });
+
+    return view('lotacao.edit', compact('lotacao', 'docentes', 'disciplinasDisponiveis'));
+}
+
+
+
+public function update(Request $request, $id)
+{
+    $request->validate([
+        'turma_id' => 'required|integer|exists:turmas,id',
+        'docente_id' => 'required|integer|exists:docentes,id',
+        'disciplina_id' => 'required|integer|exists:disciplinas,id',
+    ]);
+
+    $lotacao = Lotacao::findOrFail($id);
+    $lotacao->update([
+        'turma_id' => $request->turma_id,
+        'docente_id' => $request->docente_id,
+        'disciplina_id' => $request->disciplina_id,
+    ]);
+
+    return redirect()->route('lotacao.index')->with('success', 'Lotação atualizada com sucesso!');
+}
+
 
     /**
      * Remove o recurso especificado do armazenamento.

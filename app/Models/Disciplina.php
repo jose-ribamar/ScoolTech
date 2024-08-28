@@ -15,4 +15,9 @@ class Disciplina extends Model
         'name',
         'date_creation',
     ];
+
+    public function lotacoes()
+    {
+        return $this->hasMany(Lotacao::class);
+    }
 }
