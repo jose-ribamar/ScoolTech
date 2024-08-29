@@ -96,9 +96,13 @@
 
         <div class="direcao-title">
             <span>Lotação 
-                <a href="{{ route('lotacao.create', ['turma_id' => request('turma_id')]) }}">
-                    <i class="material-icons">add</i>
-                </a>
+                @if (request('turma_id'))
+                    <a href="{{ route('lotacao.create', ['turma_id' => request('turma_id')]) }}">
+                        <i class="material-icons">add</i>
+                    </a>
+                @else
+                    <i class="material-icons" style="color: #ccc; cursor: not-allowed;">add</i>
+                @endif
             </span>
         </div>
         

@@ -10,9 +10,6 @@ use Illuminate\Http\Request;
 
 class LotacaoController extends Controller
 {
-    /**
-     * Exibe uma listagem do recurso.
-     */
     public function index(Request $request)
     {
         $turmaId = $request->input('turma_id');
@@ -37,7 +34,7 @@ class LotacaoController extends Controller
         $docentes = Docente::all();
 
         // Obter disciplinas já selecionadas para a turma
-        $disciplinasSelecionadas = Lotacao::where('id', $turma->id)->pluck('disciplina_id')->toArray();
+        $disciplinasSelecionadas = Lotacao::where('turma_id', $turma->id)->pluck('disciplina_id')->toArray();
 
         // Obter disciplinas que não foram selecionadas
         $disciplinas = Disciplina::whereNotIn('id', $disciplinasSelecionadas)->get();
@@ -62,57 +59,39 @@ class LotacaoController extends Controller
         return redirect()->route('lotacao.index')->with('success', 'Lotação criada com sucesso.');
     }
 
-    /**
-     * Exibe o recurso especificado.
-     */
-    public function show(Lotacao $lotacao)
-    {
-        // Implementar conforme necessidade
-    }
-
-    /**
-     * Mostra o formulário para edição do recurso especificado.
-     */
     public function edit($id)
 {
     $lotacao = Lotacao::findOrFail($id);
     $docentes = Docente::all();
 
-    // Obter a lista de disciplinas disponíveis para seleção
-    $disciplinas = Disciplina::all();
-
-    // Adicionar lógica para excluir disciplinas já alocadas, exceto a disciplina atual
-    $disciplinasDisponiveis = $disciplinas->filter(function ($disciplina) use ($lotacao) {
-        return $disciplina->id === $lotacao->disciplina_id || !Lotacao::where('disciplina_id', $disciplina->id)->exists();
-    });
+    // Obter a lista de disciplinas disponíveis, incluindo a disciplina atual da lotação
+    $disciplinasDisponiveis = Disciplina::whereDoesntHave('lotacoes', function($query) use ($lotacao) {
+        $query->where('turma_id', $lotacao->turma_id)
+              ->where('disciplina_id', '!=', $lotacao->disciplina_id);
+    })->orWhere('id', $lotacao->disciplina_id)->get();
 
     return view('lotacao.edit', compact('lotacao', 'docentes', 'disciplinasDisponiveis'));
 }
 
 
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'turma_id' => 'required|integer|exists:turmas,id',
+            'docente_id' => 'required|integer|exists:docentes,id',
+            'disciplina_id' => 'required|integer|exists:disciplinas,id',
+        ]);
 
-public function update(Request $request, $id)
-{
-    $request->validate([
-        'turma_id' => 'required|integer|exists:turmas,id',
-        'docente_id' => 'required|integer|exists:docentes,id',
-        'disciplina_id' => 'required|integer|exists:disciplinas,id',
-    ]);
+        $lotacao = Lotacao::findOrFail($id);
+        $lotacao->update([
+            'turma_id' => $request->turma_id,
+            'docente_id' => $request->docente_id,
+            'disciplina_id' => $request->disciplina_id,
+        ]);
 
-    $lotacao = Lotacao::findOrFail($id);
-    $lotacao->update([
-        'turma_id' => $request->turma_id,
-        'docente_id' => $request->docente_id,
-        'disciplina_id' => $request->disciplina_id,
-    ]);
+        return redirect()->route('lotacao.index')->with('success', 'Lotação atualizada com sucesso!');
+    }
 
-    return redirect()->route('lotacao.index')->with('success', 'Lotação atualizada com sucesso!');
-}
-
-
-    /**
-     * Remove o recurso especificado do armazenamento.
-     */
     public function destroy(Lotacao $lotacao)
     {
         // Implementar conforme necessidade

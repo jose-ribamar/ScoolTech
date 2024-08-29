@@ -27,12 +27,12 @@
                 <td>{{ $item->docente->user->name ?? 'Nome não disponível' }}</td> <!-- Accessing docente related to the item -->
                 <td>{{ $item->disciplina->name ?? 'Nome não disponível' }}</td>
                 <td>
-                    <a href="{{ route('lotacao.edit', ['id' => $item->id]) }}" class="btn btn-primary">
-    <i class="material-icons">edit</i>
-    <span class="hover-text"></span>
-</a>
+                    <a href="{{ route('lotacao.edit', $item->id) }}" class="btn btn-primary">
+                        <i class="material-icons">edit</i>
+                        <span class="hover-text"></span>
+                    </a>
 
-                    <a href="#">Excluir</a>
+                        <a href="#">Excluir</a>
                 </td>
             </tr>
         @empty

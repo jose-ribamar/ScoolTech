@@ -3,75 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edição de Lotação</title>
+    <title>Direção Workstation - Editar Lotação</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            margin-top: 50px;
-            width: 80%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-        .title {
-            font-size: 24px;
-            font-weight: bold;
-        }
-    </style>
 </head>
 <body>
-    <x-app-layout>
-        <x-slot name="header">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                <div class="title"> {{ __('Edição de Lotação') }} </div>
-            </h2>
-        </x-slot>
-
-        <div class="container">
-            <form action="{{ route('lotacao.update', $lotacao->id) }}" method="POST">
+    <x-guest-layout>
+        <x-authentication-card>
+            <x-slot name="logo">
+                <x-authentication-card-logo />
+            </x-slot>
+            <x-validation-errors class="mb-4" />
+            <form method="POST" action="{{ route('lotacao.update', $lotacao->id) }}">
                 @csrf
                 @method('PUT')
-
-                <div class="form-group">
-                    <label for="turma_id">Turma</label>
-                    <input type="text" class="form-control" id="turma_id" value="{{ $lotacao->turma->name }}" disabled>
+                <div>
+                    <x-label for="turma" value="{{ __('Nome da Turma') }}" />
+                    <x-input id="turma" class="block mt-1 w-full" type="text" name="turma" value="{{ $lotacao->turma->name }}" readonly />
                     <input type="hidden" name="turma_id" value="{{ $lotacao->turma_id }}">
                 </div>
-
-                <div class="form-group">
-                    <label for="docente_id">Docente</label>
-                    <select name="docente_id" id="docente_id" class="form-control">
+                <div class="mt-4">
+                    <x-label for="docente_id" value="{{ __('Nome do Docente') }}" />
+                    <select id="docente_id" name="docente_id" class="block mt-1 w-full" required>
                         @foreach($docentes as $docente)
-                        <option value="{{ $docente->id }}">{{ $docente->user->name ?? 'Docentes não cadastrados' }}
-                                {{ $docente->name }}
+                            <option value="{{ $docente->id }}" {{ $lotacao->docente_id == $docente->id ? 'selected' : '' }}>
+                                {{ $docente->user->name ?? 'Docentes não cadastrados' }}
                             </option>
                         @endforeach
                     </select>
                 </div>
-
-                <div class="form-group">
-                    <label for="disciplina_id">Disciplina</label>
-                    <select name="disciplina_id" id="disciplina_id" class="form-control">
+                <div class="mt-4">
+                    <x-label for="disciplina_id" value="{{ __('Nome da Disciplina') }}" />
+                    <select id="disciplina_id" name="disciplina_id" class="block mt-1 w-full" required>
                         @foreach($disciplinasDisponiveis as $disciplina)
                             <option value="{{ $disciplina->id }}" {{ $lotacao->disciplina_id == $disciplina->id ? 'selected' : '' }}>
-                                {{ $disciplina->name }}
+                                {{ $disciplina->name ?? 'Nome não disponível' }}
                             </option>
                         @endforeach
                     </select>
                 </div>
-
-                <button type="submit" class="btn btn-primary">Atualizar</button>
+                <div class="flex items-center justify-end mt-4">
+                    <x-button class="ml-4">
+                        {{ __('Atualizar') }}
+                    </x-button>
+                </div>
             </form>
-        </div>
-    </x-app-layout>
+        </x-authentication-card>
+    </x-guest-layout>
 </body>
 </html>
