@@ -118,11 +118,11 @@
                         <td>{{ $value->name ?? 'Nome não disponível' }}</td>
                         <td>{{ $value->date_creation }}</td>
                         <td>
-                            <form action="{{ route('disciplina.destroy', $value->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja deletar?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Excluir</button>
-                            </form>                            
+                            <a href="{{ route('disciplina.edit', $value->id) }}" class="btn btn-primary">
+                                <i class="material-icons">edit</i>
+                                <span class="hover-text"></span>
+                            </a>
+                            <a href="#">Excluir</a>                           
                         </td>
                     </tr>
                 @empty

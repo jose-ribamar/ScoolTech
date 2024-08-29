@@ -42,11 +42,11 @@ Route::middleware('auth')->group(function () {
    
 
     Route::get('/lotacao', [LotacaoController::class, 'index'])->name('lotacao.index');
-    Route::get('/lotacao/create/{id}', [LotacaoController::class, 'create'])->name('lotacao.create');
+    Route::get('/lotacao/create/{turma_id}', [LotacaoController::class, 'create'])->name('lotacao.create');
     Route::post('/lotacao', [LotacaoController::class, 'store'])->name('lotacao.store');
-    Route::get('/lotacao/{id}/edit', [LotacaoController::class, 'edit'])->name('lotacao.edit');
+    Route::get('/lotacao/{turma_id}/edit', [LotacaoController::class, 'edit'])->name('lotacao.edit');
 
-    Route::put('/lotacao/{client}', [LotacaoController::class, 'update'])->name('lotacao.update');
+    Route::put('/lotacao/{turma_id}', [LotacaoController::class, 'update'])->name('lotacao.update');
     
 
     Route::get('/matricula', [MatriculaController::class, 'index'])->name('matricula.index');
@@ -60,11 +60,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/aluno/create', [AlunoController::class, 'create'])->name('aluno.create');
     Route::post('/aluno', [AlunoController::class, 'store'])->name('aluno.store');
 
+    Route::resource('disciplina', DisciplinaController::class);
     Route::get('/disciplina', [DisciplinaController::class, 'index'])->name('disciplina.index');
     Route::get('/disciplina/create', [DisciplinaController::class, 'create'])->name('disciplina.create');
     Route::post('/disciplina/store', [DisciplinaController::class, 'store'])->name('disciplina.store');
-    Route::get('/disciplina/{client}/edit', [DisciplinaController::class, 'edit'])->name('disciplina.edit');
-    Route::put('/disciplina/{client}', [DisciplinaController::class, 'update'])->name('disciplina.update');
+    Route::get('/disciplina/{id}/edit', [DisciplinaController::class, 'edit'])->name('disciplina.edit');
+    Route::put('/disciplina/{$disciplina}', [DisciplinaController::class, 'update'])->name('disciplina.update');
     Route::delete('/disciplina/{client}', [DisciplinaController::class, 'destroy'])->name('disciplina.destroy');
 
     Route::get('/turma', [TurmaController::class, 'index'])->name('turma.index');
