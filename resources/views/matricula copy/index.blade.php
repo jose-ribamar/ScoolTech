@@ -131,14 +131,11 @@
                         <td>{{ $item->aluno->user->name ?? 'Nome não disponível' }}</td> <!-- Accessing docente related to the item -->
                         <td>{{ $item->date_creation ?? 'Nome não disponível' }}</td>
                         <td>
-                            <a href="{{ route('matricula.edit', $item->id) }}"
-                                class="bg-blue-500 border rounded-md p-1 px-3 text-black">
-                                 Editar
-                             </a>
+                            <a href="#">Editar</a>
                             <a href="#">Excluir</a>
                         </td>
                     </tr>
-                    @empty
+                @empty
                     <tr>
                         <td colspan="4">Nenhum registro encontrado.</td>
                     </tr>

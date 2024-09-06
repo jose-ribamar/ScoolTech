@@ -34,6 +34,24 @@ class Matricula extends Model
         }
         return true;
     }
+
+    public function updatematricula(array $matricula): bool
+{
+    try {
+        DB::beginTransaction();
+
+        $this->update([
+            'date_creation' => $matricula['date_creation'],
+        ]);
+
+        DB::commit();
+    } catch (\Throwable $th) {
+        DB::rollBack();
+        return false;
+    }
+    return true;
+}
+
     public function turma()
     {
         return $this->belongsTo(Turma::class);

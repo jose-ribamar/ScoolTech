@@ -78,16 +78,29 @@ class MatriculaController extends Controller
      */
     public function edit(Matricula $matricula)
     {
-        //
+        
+        $turmas = Turma::all();
+        $alunos = Aluno::all();
+
+        return view('matricula.edit', compact('matricula', 'alunos', 'turmas'));
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Matricula $matricula)
-    {
-        //
+{
+    $data = $request->only(['date_creation']);
+
+    if (!$matricula->updatematricula($data)) {
+        return redirect()->back()->withErrors('Erro ao atualizar.');
     }
+
+    return redirect()->route('turma.index')->with('success', 'Atualizada com sucesso.');
+}
+
+
+    
 
     /**
      * Remove the specified resource from storage.
