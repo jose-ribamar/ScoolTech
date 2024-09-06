@@ -30,9 +30,17 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+
+ 
+
     Route::get('/direcao', [DirecaoController::class, 'index'])->name('direcao.index');
     Route::get('/direcao/create', [DirecaoController::class, 'create'])->name('direcao.create');
     Route::post('/direcao', [DirecaoController::class, 'store'])->name('direcao.store');
+    Route::get('/direcao/{direcao}', [DirecaoController::class, 'show'])->name('direcao.show');
+    // Route::get('/direcao/{direcao}/edit', [DirecaoController::class, 'edit'])->name('direcao.edit');
+    // Route::put('/direcao/{direcao}', [DirecaoController::class, 'update'])->name('direcao.update');
+    // Route::delete('/direcao/{direcao}', [DirecaoController::class, 'destroy'])->name('direcao.destroy');
+
 
     Route::get('/docente', [DocenteController::class, 'index'])->name('docente.index');
     Route::get('/docente/create', [DocenteController::class, 'create'])->name('docente.create');
@@ -53,8 +61,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/matricula/search', [MatriculaController::class, 'search'])->name('matricula.search');
     Route::get('/matricula/create/{turma_id}', [matriculaController::class, 'create'])->name('matricula.create');
     Route::post('/matricula', [matriculaController::class, 'store'])->name('matricula.store');
+    Route::get('/matricula/{matricula}/edit', [MatriculaController::class, 'edit'])->name('matricula.edit');
+    Route::put('/matricula/{matricula}', [MatriculaController::class, 'update'])->name('matricula.update');
 
-    
+    // Route::delete('/matricula/{matricula}', [MatriculaController::class, 'destroy'])->name('matricula.destroy');
 
     Route::get('/aluno', [AlunoController::class, 'index'])->name('aluno.index');
     Route::get('/aluno/create', [AlunoController::class, 'create'])->name('aluno.create');
