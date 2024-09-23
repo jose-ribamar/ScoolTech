@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <!-- SweetAlert2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Direção Workstation - Listar</title>
+    <title>Disciplina - Listar</title>
+    <!-- Bootstrap CSS for base styling -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Google Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f4f7fa;
         }
         .container {
             margin-top: 50px;
@@ -16,15 +24,10 @@
             margin-left: auto;
             margin-right: auto;
         }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
         .title {
             font-size: 24px;
             font-weight: bold;
+            margin-bottom: 20px;
         }
         .direcao-title {
             font-size: 20px;
@@ -32,108 +35,158 @@
             display: flex;
             align-items: center;
         }
-        .direcao-title svg {
+        .direcao-title a {
             margin-left: 10px;
-            cursor: pointer;
-        }
-        .search-box {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-        .search-box input[type="text"] {
-            width: 60%;
-            padding: 10px;
-            margin-right: 10px;
-            border: 1px solid #ccc;
+            background-color: #007bff;
+            color: white;
+            padding: 5px 10px;
             border-radius: 4px;
+            text-decoration: none;
         }
-        .search-box button {
-            padding: 10px 20px;
-            border: 1px solid black;
-            background-color: #f8f9fa;
-            cursor: pointer;
+        .direcao-title a i {
+            vertical-align: middle;
+        }
+        .direcao-title a:hover {
+            background-color: #0056b3;
         }
         .table-container {
             width: 100%;
             overflow-x: auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
         }
-        table, th, td {
-            border: 1px solid black;
-        }
         th, td {
-            padding: 10px;
-            text-align: left;
+            padding: 12px;
         }
         th {
             background-color: #f2f2f2;
+            font-weight: bold;
         }
-        td a {
-            margin-right: 10px;
-            text-decoration: none;
-            color: blue;
+        td {
+            border-bottom: 1px solid #ddd;
+        }
+        .btn {
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+            border-radius: 4px;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+            border-radius: 4px;
+        }
+        .btn-danger:hover {
+            background-color: #c82333;
         }
     </style>
 </head>
 <body>
-    <x-app-layout>
+
+    @if ($errors->any())
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                html: `
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                `,
+                showConfirmButton: true,
+            });
+        });
+    </script>
+    @endif
+    
         <x-slot name="header">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 <div class="title"> {{ __('Disciplina') }} </div>
             </h2>
         </x-slot>
+    
+
     <div class="container">
-        <div class="header">
-            <div>
-                 <!-- Coloque aqui o dropdown ou ícone de perfil do usuário -->
-            </div>
-        </div>
+        <div class="title">Disciplina</div>
 
         <div class="direcao-title">
             <span>Disciplina <a href="{{ route('disciplina.create') }}"><i class="material-icons">add</i></a></span>
-        </div>
-
-        <div class="search-box">
-            <input type="text" placeholder="Digite o nome">
-            <button>Pesquisar</button>
         </div>
 
         <div class="table-container">
             <table>
                 <thead>
                     <tr>
-                        <th>Nome</th>
-                        <th>Data de crição</th>
-                        <th>Opções</th>
+                        <th style="text-align: left;">Nome</th>
+                        <th style="text-align: center;">Data de Criação</th>
+                        <th style="text-align: right; padding-right: 80px;">Opções</th>
+
                     </tr>
                 </thead>
                 <tbody>
                 @forelse ($disciplina as $value)
                     <tr>
-                        <td>{{ $value->name ?? 'Nome não disponível' }}</td>
-                        <td>{{ $value->date_creation }}</td>
-                        <td>
+                        <td style="text-align: left;">{{ $value->name ?? 'Nome não disponível' }}</td>
+                        <td style="text-align: center;">{{ $value->date_creation }}</td>
+                        <td style="text-align: right;">
                             <a href="{{ route('disciplina.edit', $value->id) }}" class="btn btn-primary">
-                                <i class="material-icons">edit</i>
-                                <span class="hover-text"></span>
+                                <i class="material-icons">edit</i> Editar
                             </a>
-                            <a href="#">Excluir</a>                           
+                            <form id="delete-form-{{ $value->id }}" action="{{ route('disciplina.destroy', $value->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="button" class="btn btn-danger" onclick="confirmDelete({{ $value->id }})">
+                                    <i class="material-icons">delete</i> Excluir
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4">Nenhum registro encontrado.</td>
+                        <td colspan="3">Nenhum registro encontrado.</td>
                     </tr>
                 @endforelse
                 </tbody>
             </table>
         </div>
     </div>
-    </x-app-layout>
+
+    <script>
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Você tem certeza?',
+                text: "Não será possível reverter essa ação!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim, excluir!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + id).submit();
+                }
+            });
+        }
+    </script>
+   
 </body>
 </html>

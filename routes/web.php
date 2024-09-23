@@ -71,12 +71,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/aluno', [AlunoController::class, 'store'])->name('aluno.store');
 
     Route::resource('disciplina', DisciplinaController::class);
-    Route::get('/disciplina', [DisciplinaController::class, 'index'])->name('disciplina.index');
+    Route::get('/disciplina/create', [DisciplinaController::class, 'create'])->name('disciplina.create');
     Route::get('/disciplina/create', [DisciplinaController::class, 'create'])->name('disciplina.create');
     Route::post('/disciplina/store', [DisciplinaController::class, 'store'])->name('disciplina.store');
     Route::get('/disciplina/{id}/edit', [DisciplinaController::class, 'edit'])->name('disciplina.edit');
-    Route::put('/disciplina/{$disciplina}', [DisciplinaController::class, 'update'])->name('disciplina.update');
-    Route::delete('/disciplina/{client}', [DisciplinaController::class, 'destroy'])->name('disciplina.destroy');
+    Route::put('/disciplina/{disciplina}', [DisciplinaController::class, 'update'])->name('disciplina.update');
+    Route::delete('/disciplina/{disciplina}', [DisciplinaController::class, 'destroy'])->name('disciplina.destroy');
 
     Route::get('/turma', [TurmaController::class, 'index'])->name('turma.index');
     Route::get('/turma/create', [TurmaController::class, 'create'])->name('turma.create');
