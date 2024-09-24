@@ -83,6 +83,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/turma/store', [TurmaController::class, 'store'])->name('turma.store');
     Route::get('/turma/{turma}/edit', [TurmaController::class, 'edit'])->name('turma.edit');
     Route::put('/turma/{client}', [TurmaController::class, 'update'])->name('turma.update');
-    // Route::delete('/turma/{client}', [TurmaController::class, 'destroy'])->name('turma.destroy');
+    Route::delete( '/turma/{turma}', [TurmaController::class, 'destroy'])->name('turma.destroy');
 
 });

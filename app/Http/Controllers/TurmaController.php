@@ -72,8 +72,18 @@ public function update(Request $request, $id)
     return redirect()->route('turma.index')->with('success', 'Turma updated successfully');
 }
 
-    public function destroy(Turma $turma)
-    {
-        //
-    }
+public function destroy(Turma $turma)
+{
+    // Exclui todas as lotacoes associadas a esta turma
+    $turma->lotacoes()->delete();
+
+    // Agora exclui o registro da turma
+    $turma->delete();
+
+    // Redireciona de volta para o índice com uma mensagem de sucesso
+    return redirect()->route('turma.index')->with('success', 'Turma excluída com sucesso!');
+}
+
+
+
 }
