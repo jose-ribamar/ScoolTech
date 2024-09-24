@@ -98,6 +98,15 @@
 </head>
 <body>
 
+    <x-app-layout>
+        <x-slot name="header">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                <div class="title"> {{ __('Disciplinas') }} </div>
+            </h2>
+        </x-slot>
+
+    
+
     @if ($errors->any())
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -125,10 +134,10 @@
     
 
     <div class="container">
-        <div class="title">Disciplina</div>
+        {{-- <div class="title">Disciplina</div> --}}
 
         <div class="direcao-title">
-            <span>Disciplina <a href="{{ route('disciplina.create') }}"><i class="material-icons">add</i></a></span>
+            <span>Adicionar Disciplina <a href="{{ route('disciplina.create') }}"><i class="material-icons">add</i></a></span>
         </div>
 
         <div class="table-container">
@@ -187,6 +196,6 @@
             });
         }
     </script>
-   
+   </x-app-layout>
 </body>
 </html>
