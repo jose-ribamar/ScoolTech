@@ -107,6 +107,13 @@ class MatriculaController extends Controller
      */
     public function destroy(Matricula $matricula)
     {
-        //
+        $delete = $matricula ->deleteMatricula();
+
+        if (!$delete) {
+            return redirect()->back()->withErrors('Erro ao excluir matrícula.');
+        }
+
+        return redirect()->route('turma.index')->with('success', 'Matrícula deletada com sucesso!');
+    
     }
 }

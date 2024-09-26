@@ -130,7 +130,7 @@
 
         <div class="container">
            
-
+            
             <div class="turma-title">
                 <span>Turma <a href="{{ route('turma.create') }}"><i class="material-icons">add</i></a></span>
             </div>

@@ -52,6 +52,21 @@ class Matricula extends Model
     return true;
 }
 
+public function deleteMatricula(): bool
+    {
+        try {
+            DB::beginTransaction();
+
+            $this->delete();
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return false;
+        }
+        return true;
+    }
+
     public function turma()
     {
         return $this->belongsTo(Turma::class);

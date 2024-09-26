@@ -63,8 +63,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/matricula', [matriculaController::class, 'store'])->name('matricula.store');
     Route::get('/matricula/{matricula}/edit', [MatriculaController::class, 'edit'])->name('matricula.edit');
     Route::put('/matricula/{matricula}', [MatriculaController::class, 'update'])->name('matricula.update');
+    Route::delete('/matricula/{matricula}', [MatriculaController::class, 'destroy'])->name('matricula.destroy');
 
-    // Route::delete('/matricula/{matricula}', [MatriculaController::class, 'destroy'])->name('matricula.destroy');
 
     Route::get('/aluno', [AlunoController::class, 'index'])->name('aluno.index');
     Route::get('/aluno/create', [AlunoController::class, 'create'])->name('aluno.create');

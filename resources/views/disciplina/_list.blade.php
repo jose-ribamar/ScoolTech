@@ -27,7 +27,7 @@
                         <span class="hover-text"></span>
                     </a>
                     <a href="#">Excluir</a>                           
-                </td>
+                </td>   
             </tr>
         @empty
             <tr>
